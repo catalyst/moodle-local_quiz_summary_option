@@ -18,9 +18,16 @@
  * Language strings
  *
  * @package    local_quiz_summary_option
- * @copyright  2021 <christinatheeroperto@catalyst-au.net>
+ * @author     Christina Roperto (christinatheeroperto@catalyst-au.net)
+ * @copyright  Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['pluginname'] = 'Quiz Summary Option';
 $string['privacy:metadata'] = 'The local quiz summary option plugin does not store any personal data.';
+$string['configsummaryoption'] = 'on show summary page will be appear once the quiz is submitted, otherwise summary page is hidden';
+$string['summarypageoption'] = 'Summary page option';
+$string['summaryoption'] = 'Summary page';
+$string['summaryoption_show'] = 'Show';
+$string['summaryoption_help'] = 'enable the ability to show/hide summary page after completing quiz';
+$string['summaryoption_hide'] = 'Hide';

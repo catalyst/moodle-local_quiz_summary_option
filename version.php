@@ -18,12 +18,13 @@
  * Version details
  *
  * @package    local_quiz_summary_option
- * @copyright  2021 <christinatheeroperto@catalyst-au.net>
+ * @author     Christina Roperto (christinatheeroperto@catalyst-au.net)
+ * @copyright  Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2021060800;
+$plugin->version   = 2021060801;
 $plugin->release   = '0.1';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->requires  = 2020061500; // Moodle 2.6 release and upwards.

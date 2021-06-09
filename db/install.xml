@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/quiz_summary_option/db" VERSION="2021060800" COMMENT="XMLDB file for Moodle local_quiz_summary_option"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+    <TABLES>
+        <TABLE NAME="local_quiz_summary_option" COMMENT="to add a show field">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The assigned course module id"/>
+                <FIELD NAME="show_summary" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="if show is 1 it will show summary page"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="cmid" UNIQUE="true" FIELDS="cmid"/>
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>
