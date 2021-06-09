@@ -68,24 +68,14 @@ function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $
     if ($moduleinfo->summaryoption == 'SUMMARY_OPTION_HIDE') {
         $show = 0;
     }
-    add_show_flag_to_db($cmid, $show);
-}
-
-function add_show_flag_to_db($cmid, $show) {
     global $DB;
-    $data = [
-        'cmid'=>$cmid,
-    ];
-    $row = $DB->get_record('local_quiz_summary_option', $data, 'id');
+    $row = $DB->get_record('local_quiz_summary_option', ['cmid'=>$cmid], 'id');
 
     //check if record exists, if yes then update otherwise insert the record
-    if ($row !== null) {
-        $data['id'] = $row->id;
-        $data['show_summary'] = $show;
-        $DB->update_record('local_quiz_summary_option', $data);
+    if ($row) {
+        $DB->update_record('local_quiz_summary_option', ['id' => $row->id, 'show_summary' => $show]);
     }
     else {
-        $data['show_summary'] = $show;
-        $DB->insert_record('local_quiz_summary_option', $data, false);
+        $DB->insert_record('local_quiz_summary_option', ['cmid'=>$cmid, 'show_summary' => $show], false);
     }
 }
