@@ -79,3 +79,30 @@ function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $
         $DB->insert_record('local_quiz_summary_option', ['cmid'=>$cmid, 'show_summary' => $show], false);
     }
 }
+
+
+function local_quiz_summary_option_after_config(){
+    global $DB, $SCRIPT;
+
+    if ($SCRIPT != '/mod/quiz/processattempt.php') {
+        return;
+    }
+
+    $nextpage = optional_param('nextpage', 0, PARAM_INT);
+    if ($nextpage!=-1) {
+        return;
+    }
+
+    $cmid = optional_param('cmid', null, PARAM_INT);
+    $row = $DB->get_record('local_quiz_summary_option', ['cmid'=>$cmid], 'show_summary');
+    if(!$row){
+        return;
+    }
+
+    $show = $row->show_summary;
+    if ($show) {
+        return;
+    }
+
+    $_GET['finishattempt'] = 1;
+}
