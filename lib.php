@@ -32,10 +32,21 @@ defined('MOODLE_INTERNAL') || die;
  * @param \MoodleQuickForm $mform Course module form instance.
  */
 function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod $formwrapper, MoodleQuickForm $mform) {
+    global $DB;
+
     $modulename = $formwrapper->get_current()->modulename;
     if ($modulename!='quiz') {
         return;
     }
+
+    $cmid = $formwrapper->get_current()->coursemodule;
+    $row = $DB->get_record('local_quiz_summary_option', ['cmid'=>$cmid], 'show_summary');
+    $show = true;
+    if ($row) {
+        $show = $row->show_summary;
+    }
+    $default = $show ? "SUMMARY_OPTION_SHOW" : "SUMMARY_OPTION_HIDE";
+
     $mform->addElement('header', 'summaryoptionhdr', get_string('summarypageoption', 'local_quiz_summary_option'));
     $mform->addElement(
         'select',
@@ -46,7 +57,7 @@ function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod
             "SUMMARY_OPTION_HIDE"=> get_string('summaryoption_hide', 'local_quiz_summary_option'),
         ]
     );
-     //var_dump($mform);
+    $mform->setDefault('summaryoption', $default);
     $mform->addHelpButton('summaryoption', 'summaryoption', 'local_quiz_summary_option');
 }
 
