@@ -26,22 +26,22 @@
 defined('MOODLE_INTERNAL') || die();
 
 class local_quiz_summary_option_lib_testcase extends advanced_testcase {
-   public function test_quiz_summary_option_element_is_added() {
-       // Given: assumptions.
-       $current = new stdClass();
-       $current->modulename = "quiz";
-       $current->coursemodule = 12345;
-       $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
-       $mockbuilder->disableOriginalConstructor();
-       $formwrapperstub = $mockbuilder->getMock();
-       $formwrapperstub->method('get_current')->willReturn($current);
-       $mform = new MoodleQuickForm("test", "POST", "test");
-       // When: action to test.
-       local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
-       // Then: what you expect.
-       $found = $mform->getElement("summaryoption");
-       self::assertInstanceOf(MoodleQuickForm_select::class, $found);
-   }
+    public function test_quiz_summary_option_element_is_added() {
+        // Given: assumptions.
+        $current = new stdClass();
+        $current->modulename = "quiz";
+        $current->coursemodule = 12345;
+        $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
+        $mockbuilder->disableOriginalConstructor();
+        $formwrapperstub = $mockbuilder->getMock();
+        $formwrapperstub->method('get_current')->willReturn($current);
+        $mform = new MoodleQuickForm("test", "POST", "test");
+        // When: action to test.
+        local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
+        // Then: what you expect.
+        $found = $mform->getElement("summaryoption");
+        self::assertInstanceOf(MoodleQuickForm_select::class, $found);
+    }
 
     public function test_quiz_summary_option_ignores_if_module_not_quiz() {
         // Given: assumptions.
@@ -101,13 +101,14 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $row->id = '11111';
         $DB->method('get_record')->willReturn($row);
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
-        self::assertEquals('SUMMARY_OPTION_HIDE', $mform->_defaultValues['summaryoption']);    }
+        self::assertEquals('SUMMARY_OPTION_HIDE', $mform->_defaultValues['summaryoption']);
+    }
 
     public function test_post_inserts_as_needed() {
         global $DB;
         $moduleinfo = new stdClass();
-        $moduleinfo->modulename='quiz';
-        $moduleinfo->coursemodule='12345';
+        $moduleinfo->modulename = 'quiz';
+        $moduleinfo->coursemodule = '12345';
         $moduleinfo->summaryoption = 'SUMMARY_OPTION_SHOW';
         $course = '55555';
         $mockbuilder = $this->getMockBuilder(moodle_database::class);
@@ -122,8 +123,8 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
     public function test_post_updates_as_needed() {
         global $DB;
         $moduleinfo = new stdClass();
-        $moduleinfo->modulename='quiz';
-        $moduleinfo->coursemodule='12345';
+        $moduleinfo->modulename = 'quiz';
+        $moduleinfo->coursemodule = '12345';
         $moduleinfo->summaryoption = 'SUMMARY_OPTION_SHOW';
         $course = '55555';
         $mockbuilder = $this->getMockBuilder(moodle_database::class);
@@ -136,13 +137,13 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $DB->expects($this->once())->method('update_record');
 
         local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course);
-   }
+    }
 
     public function test_post_ignores_if_not_quiz() {
         global $DB;
         $moduleinfo = new stdClass();
-        $moduleinfo->modulename='forum';
-        $moduleinfo->coursemodule='12345';
+        $moduleinfo->modulename = 'forum';
+        $moduleinfo->coursemodule = '12345';
         $moduleinfo->summaryoption = 'SUMMARY_OPTION_SHOW';
         $course = '55555';
         $mockbuilder = $this->getMockBuilder(moodle_database::class);
@@ -203,6 +204,6 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $DB->method('get_record')->willReturn($row);
 
         local_quiz_summary_option_after_config();
-        self::assertEquals(1,$row->show_summary);
+        self::assertEquals(1, $row->show_summary);
     }
 }

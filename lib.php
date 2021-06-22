@@ -35,12 +35,12 @@ function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod
     global $DB;
 
     $modulename = $formwrapper->get_current()->modulename;
-    if ($modulename!='quiz') {
+    if ($modulename != 'quiz') {
         return;
     }
 
     $cmid = $formwrapper->get_current()->coursemodule;
-    $row = $DB->get_record('local_quiz_summary_option', ['cmid'=>$cmid], 'show_summary');
+    $row = $DB->get_record('local_quiz_summary_option', ['cmid' => $cmid], 'show_summary');
     $show = true;
     if ($row) {
         $show = $row->show_summary;
@@ -53,8 +53,8 @@ function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod
         'summaryoption',
         get_string('summaryoption', 'local_quiz_summary_option'),
         [
-            "SUMMARY_OPTION_SHOW"=> get_string('summaryoption_show', 'local_quiz_summary_option'),
-            "SUMMARY_OPTION_HIDE"=> get_string('summaryoption_hide', 'local_quiz_summary_option'),
+            "SUMMARY_OPTION_SHOW" => get_string('summaryoption_show', 'local_quiz_summary_option'),
+            "SUMMARY_OPTION_HIDE" => get_string('summaryoption_hide', 'local_quiz_summary_option'),
         ]
     );
     $mform->setDefault('summaryoption', $default);
@@ -71,7 +71,7 @@ function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod
  */
 
 function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course) {
-    if ($moduleinfo->modulename!='quiz') {
+    if ($moduleinfo->modulename != 'quiz') {
         return;
     }
     $show = 1;
@@ -80,19 +80,18 @@ function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $
         $show = 0;
     }
     global $DB;
-    $row = $DB->get_record('local_quiz_summary_option', ['cmid'=>$cmid], 'id');
+    $row = $DB->get_record('local_quiz_summary_option', ['cmid' => $cmid], 'id');
 
-    //check if record exists, if yes then update otherwise insert the record
+    // Check if record exists, if yes then update otherwise insert the record.
     if ($row) {
         $DB->update_record('local_quiz_summary_option', ['id' => $row->id, 'show_summary' => $show]);
-    }
-    else {
-        $DB->insert_record('local_quiz_summary_option', ['cmid'=>$cmid, 'show_summary' => $show], false);
+    } else {
+        $DB->insert_record('local_quiz_summary_option', ['cmid' => $cmid, 'show_summary' => $show], false);
     }
 }
 
 
-function local_quiz_summary_option_after_config(){
+function local_quiz_summary_option_after_config() {
     global $DB, $SCRIPT;
 
     if ($SCRIPT != '/mod/quiz/processattempt.php') {
@@ -100,13 +99,13 @@ function local_quiz_summary_option_after_config(){
     }
 
     $nextpage = optional_param('nextpage', 0, PARAM_INT);
-    if ($nextpage!=-1) {
+    if ($nextpage != -1) {
         return;
     }
 
     $cmid = optional_param('cmid', null, PARAM_INT);
-    $row = $DB->get_record('local_quiz_summary_option', ['cmid'=>$cmid], 'show_summary');
-    if(!$row){
+    $row = $DB->get_record('local_quiz_summary_option', ['cmid' => $cmid], 'show_summary');
+    if (!$row) {
         return;
     }
 

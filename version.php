@@ -12,15 +12,15 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/license
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Version details
  *
- * @package    local_quiz_summary_option
- * @author     Christina Roperto (christinatheeroperto@catalyst-au.net)
- * @copyright  Catalyst IT
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   local_quiz_summary_option
+ * @author    Christina Roperto (christinatheeroperto@catalyst-au.net)
+ * @copyright Catalyst IT
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die;
 
