@@ -29,47 +29,47 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
     public function test_quiz_summary_option_element_is_added() {
         // Given: assumptions.
         $current = new stdClass();
-        $current->modulename = "quiz";
+        $current->modulename = 'quiz';
         $current->coursemodule = 12345;
         $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
         $mockbuilder->disableOriginalConstructor();
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
-        $mform = new MoodleQuickForm("test", "POST", "test");
+        $mform = new MoodleQuickForm('test', 'POST', 'test');
         // When: action to test.
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
         // Then: what you expect.
-        $found = $mform->getElement("summaryoption");
+        $found = $mform->getElement('summaryoption');
         self::assertInstanceOf(MoodleQuickForm_select::class, $found);
     }
 
     public function test_quiz_summary_option_ignores_if_module_not_quiz() {
         // Given: assumptions.
         $current = new stdClass();
-        $current->modulename = "forum";
+        $current->modulename = 'forum';
         $current->coursemodule = 12345;
         $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
         $mockbuilder->disableOriginalConstructor();
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
-        $mform = new MoodleQuickForm("test", "POST", "test");
+        $mform = new MoodleQuickForm('test', 'POST', 'test');
         // When: action to test.
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
         // Then: what you expect.
-        $found = $mform->elementExists("summaryoption");
+        $found = $mform->elementExists('summaryoption');
         self::assertFalse($found);
     }
 
     public function test_if_saved_show_it_defaults_to_show() {
         global $DB;
         $current = new stdClass();
-        $current->modulename = "quiz";
+        $current->modulename = 'quiz';
         $current->coursemodule = 12345;
         $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
         $mockbuilder->disableOriginalConstructor();
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
-        $mform = new MoodleQuickForm("test", "POST", "test");
+        $mform = new MoodleQuickForm('test', 'POST', 'test');
 
         $dbmockbuilder = $this->getMockBuilder(moodle_database::class);
         $dbmockbuilder->disableOriginalConstructor();
@@ -85,13 +85,13 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
     public function test_if_saved_hide_it_defaults_to_hide() {
         global $DB;
         $current = new stdClass();
-        $current->modulename = "quiz";
+        $current->modulename = 'quiz';
         $current->coursemodule = 12345;
         $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
         $mockbuilder->disableOriginalConstructor();
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
-        $mform = new MoodleQuickForm("test", "POST", "test");
+        $mform = new MoodleQuickForm('test', 'POST', 'test');
 
         $dbmockbuilder = $this->getMockBuilder(moodle_database::class);
         $dbmockbuilder->disableOriginalConstructor();
@@ -168,7 +168,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $DB->method('get_record')->willReturn($row);
 
         local_quiz_summary_option_after_config();
-        self::assertArrayNotHasKey("finishattempt", $_GET);
+        self::assertArrayNotHasKey('finishattempt', $_GET);
     }
 
     public function test_shows_summary_page_if_hide() {
@@ -185,7 +185,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $DB->method('get_record')->willReturn($row);
 
         local_quiz_summary_option_after_config();
-        self::assertArrayHasKey("finishattempt", $_GET);
+        self::assertArrayHasKey('finishattempt', $_GET);
         self::assertEquals(1, $_GET['finishattempt']);
 
     }
