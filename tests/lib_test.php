@@ -79,7 +79,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $row->id = '11111';
         $DB->method('get_record')->willReturn($row);
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
-        self::assertEquals('SUMMARY_OPTION_SHOW', $mform->_defaultValues['summaryoption']);
+        self::assertEquals('SHOW', $mform->_defaultValues['summaryoption']);
     }
 
     public function test_if_saved_hide_it_defaults_to_hide() {
@@ -101,7 +101,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $row->id = '11111';
         $DB->method('get_record')->willReturn($row);
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
-        self::assertEquals('SUMMARY_OPTION_HIDE', $mform->_defaultValues['summaryoption']);
+        self::assertEquals('HIDE', $mform->_defaultValues['summaryoption']);
     }
 
     public function test_post_inserts_as_needed() {
@@ -109,7 +109,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $moduleinfo = new stdClass();
         $moduleinfo->modulename = 'quiz';
         $moduleinfo->coursemodule = '12345';
-        $moduleinfo->summaryoption = 'SUMMARY_OPTION_SHOW';
+        $moduleinfo->summaryoption = 'SHOW';
         $course = '55555';
         $mockbuilder = $this->getMockBuilder(moodle_database::class);
         $mockbuilder->disableOriginalConstructor();
@@ -125,7 +125,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $moduleinfo = new stdClass();
         $moduleinfo->modulename = 'quiz';
         $moduleinfo->coursemodule = '12345';
-        $moduleinfo->summaryoption = 'SUMMARY_OPTION_SHOW';
+        $moduleinfo->summaryoption = 'SHOW';
         $course = '55555';
         $mockbuilder = $this->getMockBuilder(moodle_database::class);
         $mockbuilder->disableOriginalConstructor();
@@ -144,7 +144,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $moduleinfo = new stdClass();
         $moduleinfo->modulename = 'forum';
         $moduleinfo->coursemodule = '12345';
-        $moduleinfo->summaryoption = 'SUMMARY_OPTION_SHOW';
+        $moduleinfo->summaryoption = 'SHOW';
         $course = '55555';
         $mockbuilder = $this->getMockBuilder(moodle_database::class);
         $mockbuilder->disableOriginalConstructor();

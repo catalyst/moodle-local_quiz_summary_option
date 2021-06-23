@@ -31,6 +31,10 @@ defined('MOODLE_INTERNAL') || die;
  * @param \moodleform_mod $formwrapper An instance of moodleform_mod class.
  * @param \MoodleQuickForm $mform Course module form instance.
  */
+
+define('SHOW', 'SUMMARY_OPTION_SHOW');
+define('HIDE', 'SUMMARY_OPTION_HIDE');
+
 function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod $formwrapper, MoodleQuickForm $mform) {
     global $DB;
 
@@ -45,7 +49,7 @@ function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod
     if ($row) {
         $show = $row->show_summary;
     }
-    $default = $show ? "SUMMARY_OPTION_SHOW" : "SUMMARY_OPTION_HIDE";
+    $default = $show ? 'SHOW' : 'HIDE';
 
     $mform->addElement('header', 'summaryoptionhdr', get_string('summarypageoption', 'local_quiz_summary_option'));
     $mform->addElement(
@@ -53,8 +57,8 @@ function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod
         'summaryoption',
         get_string('summaryoption', 'local_quiz_summary_option'),
         [
-            "SUMMARY_OPTION_SHOW" => get_string('summaryoption_show', 'local_quiz_summary_option'),
-            "SUMMARY_OPTION_HIDE" => get_string('summaryoption_hide', 'local_quiz_summary_option'),
+            'SHOW' => get_string('summaryoption_show', 'local_quiz_summary_option'),
+            'HIDE' => get_string('summaryoption_hide', 'local_quiz_summary_option'),
         ]
     );
     $mform->setDefault('summaryoption', $default);
@@ -76,7 +80,7 @@ function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $
     }
     $show = 1;
     $cmid = $moduleinfo->coursemodule;
-    if ($moduleinfo->summaryoption == 'SUMMARY_OPTION_HIDE') {
+    if ($moduleinfo->summaryoption == 'HIDE') {
         $show = 0;
     }
     global $DB;
