@@ -31,7 +31,6 @@ defined('MOODLE_INTERNAL') || die;
  * @param \moodleform_mod $formwrapper An instance of moodleform_mod class.
  * @param \MoodleQuickForm $mform Course module form instance.
  */
-
 define('SHOW', 'SUMMARY_OPTION_SHOW');
 define('HIDE', 'SUMMARY_OPTION_HIDE');
 
@@ -70,10 +69,7 @@ function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod
  *
  * @param stdClass $moduleinfo Course module object.
  * @param int $course Course ID.
- *
- * @return mixed
  */
-
 function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course) {
     if ($moduleinfo->modulename != 'quiz') {
         return;
@@ -93,8 +89,9 @@ function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $
         $DB->insert_record('local_quiz_summary_option', ['cmid' => $cmid, 'show_summary' => $show], false);
     }
 }
-
-
+/**
+ * Checks if show summary is disabled (hidden) then skips summary page.
+ */
 function local_quiz_summary_option_after_config() {
     global $DB, $SCRIPT;
 

@@ -26,6 +26,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 class local_quiz_summary_option_lib_testcase extends advanced_testcase {
+
+    /**
+     * Test if summary option element is added on the form
+     */
     public function test_quiz_summary_option_element_is_added() {
         // Given: assumptions.
         $current = new stdClass();
@@ -43,6 +47,9 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         self::assertInstanceOf(MoodleQuickForm_select::class, $found);
     }
 
+    /**
+     * Test if module name is not quiz, dont show the summary option element.
+     */
     public function test_quiz_summary_option_ignores_if_module_not_quiz() {
         // Given: assumptions.
         $current = new stdClass();
@@ -60,6 +67,9 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         self::assertFalse($found);
     }
 
+    /**
+     * Test if dropdown select will default to the option chosen. In this case if show is chosen, will default to show.
+     */
     public function test_if_saved_show_it_defaults_to_show() {
         global $DB;
         $current = new stdClass();
@@ -82,6 +92,9 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         self::assertEquals('SHOW', $mform->_defaultValues['summaryoption']);
     }
 
+    /**
+     * Test if dropdown select will default to the option chosen. In this case if hide is chosen, will default to hide.
+     */
     public function test_if_saved_hide_it_defaults_to_hide() {
         global $DB;
         $current = new stdClass();
@@ -104,6 +117,9 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         self::assertEquals('HIDE', $mform->_defaultValues['summaryoption']);
     }
 
+    /**
+     * Test if DB will call insert method.
+     */
     public function test_post_inserts_as_needed() {
         global $DB;
         $moduleinfo = new stdClass();
@@ -120,6 +136,9 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course);
     }
 
+    /**
+     * Test if DB will call update method.
+     */
     public function test_post_updates_as_needed() {
         global $DB;
         $moduleinfo = new stdClass();
@@ -139,6 +158,9 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course);
     }
 
+    /**
+     * Test if DB will ignore insertion if module name is not quiz
+     */
     public function test_post_ignores_if_not_quiz() {
         global $DB;
         $moduleinfo = new stdClass();
@@ -155,6 +177,9 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course);
     }
 
+    /**
+     * Test if no option was chosen/saved previously, will default to show
+     */
     public function test_shows_summary_page_by_default() {
         global $DB, $SCRIPT;
         $SCRIPT = '/mod/quiz/processattempt.php';
@@ -171,7 +196,10 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         self::assertArrayNotHasKey('finishattempt', $_GET);
     }
 
-    public function test_shows_summary_page_if_hide() {
+    /**
+     * Test if 'hide' was chosen, summary page will be hidden.
+     */
+    public function test_hides_summary_page_if_hide() {
         global $DB, $SCRIPT;
         $SCRIPT = '/mod/quiz/processattempt.php';
         $_GET['nextpage'] = -1;
@@ -190,6 +218,9 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
 
     }
 
+    /**
+     * Test if 'show' was chosen, summary page will be shown.
+     */
     public function test_not_shows_summary_page_if_show() {
         global $DB, $SCRIPT;
         $SCRIPT = '/mod/quiz/processattempt.php';
