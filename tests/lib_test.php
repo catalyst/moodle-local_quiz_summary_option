@@ -71,7 +71,6 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      * Test if dropdown select will default to the option chosen. In this case if show is chosen, will default to show.
      */
     public function test_if_saved_show_it_defaults_to_show() {
-        global $DB;
         $current = new stdClass();
         $current->modulename = 'quiz';
         $current->coursemodule = 12345;
@@ -80,14 +79,6 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
         $mform = new MoodleQuickForm('test', 'POST', 'test');
-
-        $dbmockbuilder = $this->getMockBuilder(moodle_database::class);
-        $dbmockbuilder->disableOriginalConstructor();
-        $DB = $dbmockbuilder->getMock();
-        $row = new stdClass();
-        $row->show_summary = 1;
-        $row->id = '11111';
-        $DB->method('get_record')->willReturn($row);
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
         self::assertEquals('SHOW', $mform->_defaultValues['summaryoption']);
     }
@@ -97,6 +88,8 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      */
     public function test_if_saved_hide_it_defaults_to_hide() {
         global $DB;
+        $this->resetAfterTest(true);
+
         $current = new stdClass();
         $current->modulename = 'quiz';
         $current->coursemodule = 12345;
@@ -105,15 +98,10 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
         $mform = new MoodleQuickForm('test', 'POST', 'test');
+        $DB->insert_record('local_quiz_summary_option', ['cmid' => $current->coursemodule, 'show_summary' => 0], false);
 
-        $dbmockbuilder = $this->getMockBuilder(moodle_database::class);
-        $dbmockbuilder->disableOriginalConstructor();
-        $DB = $dbmockbuilder->getMock();
-        $row = new stdClass();
-        $row->show_summary = 0;
-        $row->id = '11111';
-        $DB->method('get_record')->willReturn($row);
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
+
         self::assertEquals('HIDE', $mform->_defaultValues['summaryoption']);
     }
 
@@ -122,18 +110,18 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      */
     public function test_post_inserts_as_needed() {
         global $DB;
+        $this->resetAfterTest(true);
+
         $moduleinfo = new stdClass();
         $moduleinfo->modulename = 'quiz';
         $moduleinfo->coursemodule = '12345';
         $moduleinfo->summaryoption = 'SHOW';
-        $course = '55555';
-        $mockbuilder = $this->getMockBuilder(moodle_database::class);
-        $mockbuilder->disableOriginalConstructor();
-
-        $DB = $mockbuilder->getMock();
-        $DB->expects($this->once())->method('insert_record');
+        $course = $this->getDataGenerator()->create_course('55555');
 
         local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course);
+
+        $row = $DB->get_record('local_quiz_summary_option', ['cmid' => $moduleinfo->coursemodule], 'show_summary');
+        self::assertEquals(1, $row->show_summary);
     }
 
     /**
@@ -141,21 +129,20 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      */
     public function test_post_updates_as_needed() {
         global $DB;
+        $this->resetAfterTest(true);
+
         $moduleinfo = new stdClass();
         $moduleinfo->modulename = 'quiz';
         $moduleinfo->coursemodule = '12345';
         $moduleinfo->summaryoption = 'SHOW';
-        $course = '55555';
-        $mockbuilder = $this->getMockBuilder(moodle_database::class);
-        $mockbuilder->disableOriginalConstructor();
+        $course = $this->getDataGenerator()->create_course('55555');
 
-        $DB = $mockbuilder->getMock();
-        $row = new stdClass();
-        $row->id = 11111;
-        $DB->method('get_record')->willReturn($row);
-        $DB->expects($this->once())->method('update_record');
+        $DB->insert_record('local_quiz_summary_option', ['cmid' => $moduleinfo->coursemodule, 'show_summary' => 0], false);
 
         local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course);
+
+        $row = $DB->get_record('local_quiz_summary_option', ['cmid' => $moduleinfo->coursemodule], 'show_summary');
+        self::assertEquals(1, $row->show_summary);
     }
 
     /**
@@ -163,36 +150,29 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      */
     public function test_post_ignores_if_not_quiz() {
         global $DB;
+        $this->resetAfterTest(true);
+
         $moduleinfo = new stdClass();
         $moduleinfo->modulename = 'forum';
         $moduleinfo->coursemodule = '12345';
         $moduleinfo->summaryoption = 'SHOW';
-        $course = '55555';
-        $mockbuilder = $this->getMockBuilder(moodle_database::class);
-        $mockbuilder->disableOriginalConstructor();
 
-        $DB = $mockbuilder->getMock();
-        $DB->expects($this->never())->method('insert_record');
+        local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, null);
 
-        local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course);
+        $row = $DB->get_record('local_quiz_summary_option', ['cmid' => $moduleinfo->coursemodule], 'id');
+        self::assertEquals(false, $row);
     }
 
     /**
      * Test if no option was chosen/saved previously, will default to show
      */
     public function test_shows_summary_page_by_default() {
-        global $DB, $SCRIPT;
+        global $SCRIPT;
         $SCRIPT = '/mod/quiz/processattempt.php';
         $_GET['nextpage'] = -1;
 
-        $mockbuilder = $this->getMockBuilder(moodle_database::class);
-        $mockbuilder->disableOriginalConstructor();
-        $DB = $mockbuilder->getMock();
-        $row = false;
-
-        $DB->method('get_record')->willReturn($row);
-
         local_quiz_summary_option_after_config();
+
         self::assertArrayNotHasKey('finishattempt', $_GET);
     }
 
@@ -201,18 +181,16 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      */
     public function test_hides_summary_page_if_hide() {
         global $DB, $SCRIPT;
+        $this->resetAfterTest(true);
+
         $SCRIPT = '/mod/quiz/processattempt.php';
         $_GET['nextpage'] = -1;
+        $_GET['cmid'] = 12345;
 
-        $mockbuilder = $this->getMockBuilder(moodle_database::class);
-        $mockbuilder->disableOriginalConstructor();
-        $DB = $mockbuilder->getMock();
-        $row = new stdClass();
-        $row->show_summary = 0;
-
-        $DB->method('get_record')->willReturn($row);
+        $DB->insert_record('local_quiz_summary_option', ['cmid' => $_GET['cmid'], 'show_summary' => 0], false);
 
         local_quiz_summary_option_after_config();
+
         self::assertArrayHasKey('finishattempt', $_GET);
         self::assertEquals(1, $_GET['finishattempt']);
 
@@ -223,18 +201,16 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      */
     public function test_not_shows_summary_page_if_show() {
         global $DB, $SCRIPT;
+        $this->resetAfterTest(true);
+
         $SCRIPT = '/mod/quiz/processattempt.php';
         $_GET['nextpage'] = -1;
+        $_GET['cmid'] = 12345;
 
-        $mockbuilder = $this->getMockBuilder(moodle_database::class);
-        $mockbuilder->disableOriginalConstructor();
-        $DB = $mockbuilder->getMock();
-        $row = new stdClass();
-        $row->show_summary = 1;
-
-        $DB->method('get_record')->willReturn($row);
+        $DB->insert_record('local_quiz_summary_option', ['cmid' => $_GET['cmid'], 'show_summary' => 1], false);
 
         local_quiz_summary_option_after_config();
-        self::assertEquals(1, $row->show_summary);
+
+        self::assertArrayNotHasKey('finishattempt', $_GET);
     }
 }
