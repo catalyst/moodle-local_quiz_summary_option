@@ -28,13 +28,13 @@ defined('MOODLE_INTERNAL') || die;
 /**
  * Implements callbacks coursemodule_standard_elements to add an option to show/hide quiz summary page.
  *
- * @param \moodleform_mod $formwrapper An instance of moodleform_mod class.
+ * @param \moodleform $formwrapper An instance of moodleform class.
  * @param \MoodleQuickForm $mform Course module form instance.
  */
 define('SHOW', 'SUMMARY_OPTION_SHOW');
 define('HIDE', 'SUMMARY_OPTION_HIDE');
 
-function local_quiz_summary_option_coursemodule_standard_elements(moodleform_mod $formwrapper, MoodleQuickForm $mform) {
+function local_quiz_summary_option_coursemodule_standard_elements(\moodleform $formwrapper, \MoodleQuickForm $mform) {
     global $DB;
 
     $modulename = $formwrapper->get_current()->modulename;

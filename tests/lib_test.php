@@ -35,14 +35,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      */
     public function test_quiz_summary_option_element_is_added() {
         // Given: assumptions.
-        $current = new stdClass();
-        $current->modulename = 'quiz';
-        $current->coursemodule = 12345;
-        $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
-        $mockbuilder->disableOriginalConstructor();
-        $mockbuilder->setMethods(['get_current', 'definition']);
-        $formwrapperstub = $mockbuilder->getMock();
-        $formwrapperstub->method('get_current')->willReturn($current);
+        $formwrapperstub = new \local_quiz_summary_option\local\tests\test_form();
         $mform = new MoodleQuickForm('test', 'POST', 'test');
         // When: action to test.
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
@@ -56,14 +49,8 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      */
     public function test_quiz_summary_option_ignores_if_module_not_quiz() {
         // Given: assumptions.
-        $current = new stdClass();
-        $current->modulename = 'forum';
-        $current->coursemodule = 12345;
-        $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
-        $mockbuilder->disableOriginalConstructor();
-        $mockbuilder->setMethods(['get_current', 'definition']);
-        $formwrapperstub = $mockbuilder->getMock();
-        $formwrapperstub->method('get_current')->willReturn($current);
+        $formwrapperstub = new \local_quiz_summary_option\local\tests\test_form('forum');
+        //$formwrapperstub->modulename = 'forum';
         $mform = new MoodleQuickForm('test', 'POST', 'test');
         // When: action to test.
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
@@ -76,14 +63,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
      * Test if dropdown select will default to the option chosen. In this case if show is chosen, will default to show.
      */
     public function test_if_saved_show_it_defaults_to_show() {
-        $current = new stdClass();
-        $current->modulename = 'quiz';
-        $current->coursemodule = 12345;
-        $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
-        $mockbuilder->disableOriginalConstructor();
-        $mockbuilder->setMethods(['get_current']);
-        $formwrapperstub = $mockbuilder->getMock();
-        $formwrapperstub->method('get_current')->willReturn($current);
+        $formwrapperstub = new \local_quiz_summary_option\local\tests\test_form();
         $mform = new MoodleQuickForm('test', 'POST', 'test');
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
         self::assertEquals('SHOW', $mform->_defaultValues['summaryoption']);
@@ -96,16 +76,10 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         global $DB;
         $this->resetAfterTest(true);
 
-        $current = new stdClass();
-        $current->modulename = 'quiz';
-        $current->coursemodule = 12345;
-        $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
-        $mockbuilder->disableOriginalConstructor();
-        $mockbuilder->setMethods(['get_current']);
-        $formwrapperstub = $mockbuilder->getMock();
-        $formwrapperstub->method('get_current')->willReturn($current);
+        $cmid = 1235;
+        $formwrapperstub = new \local_quiz_summary_option\local\tests\test_form('quiz', $cmid);
         $mform = new MoodleQuickForm('test', 'POST', 'test');
-        $DB->insert_record('local_quiz_summary_option', ['cmid' => $current->coursemodule, 'show_summary' => 0], false);
+        $DB->insert_record('local_quiz_summary_option', ['cmid' => $cmid, 'show_summary' => 0], false);
 
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
 
