@@ -46,7 +46,9 @@ class test_form extends \moodleform {
      * @param bool $editable
      * @param null $ajaxformdata
      */
-    public function __construct(string $modulename = 'quiz', int $coursemodule = 12345, $action = null, $customdata = null, $method = 'post', $target = '', $attributes = null, $editable = true, $ajaxformdata = null) {
+    public function __construct(string $modulename = 'quiz', int $coursemodule = 12345, $action = null,
+                                $customdata = null, $method = 'post', $target = '', $attributes = null,
+                                $editable = true, $ajaxformdata = null) {
         $this->modulename = $modulename;
         $this->coursemodule = $coursemodule;
         parent::__construct($action, $customdata, $method, $target, $attributes, $editable, $ajaxformdata);

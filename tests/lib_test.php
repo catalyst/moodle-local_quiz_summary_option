@@ -50,7 +50,6 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
     public function test_quiz_summary_option_ignores_if_module_not_quiz() {
         // Given: assumptions.
         $formwrapperstub = new \local_quiz_summary_option\local\tests\test_form('forum');
-        //$formwrapperstub->modulename = 'forum';
         $mform = new MoodleQuickForm('test', 'POST', 'test');
         // When: action to test.
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
