@@ -37,7 +37,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $current->coursemodule = 12345;
         $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
         $mockbuilder->disableOriginalConstructor();
-        $mockbuilder->onlyMethods(['get_current', 'definition']);
+        $mockbuilder->setMethods(['get_current', 'definition']);
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
         $mform = new MoodleQuickForm('test', 'POST', 'test');
@@ -58,7 +58,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $current->coursemodule = 12345;
         $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
         $mockbuilder->disableOriginalConstructor();
-        $mockbuilder->onlyMethods(['get_current', 'definition']);
+        $mockbuilder->setMethods(['get_current', 'definition']);
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
         $mform = new MoodleQuickForm('test', 'POST', 'test');
@@ -78,7 +78,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $current->coursemodule = 12345;
         $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
         $mockbuilder->disableOriginalConstructor();
-        $mockbuilder->onlyMethods(['get_current', 'definition']);
+        $mockbuilder->setMethods(['get_current']);
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
         $mform = new MoodleQuickForm('test', 'POST', 'test');
@@ -98,7 +98,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $current->coursemodule = 12345;
         $mockbuilder = $this->getMockBuilder(moodleform_mod::class);
         $mockbuilder->disableOriginalConstructor();
-        $mockbuilder->onlyMethods(['get_current', 'definition']);
+        $mockbuilder->setMethods(['get_current']);
         $formwrapperstub = $mockbuilder->getMock();
         $formwrapperstub->method('get_current')->willReturn($current);
         $mform = new MoodleQuickForm('test', 'POST', 'test');
