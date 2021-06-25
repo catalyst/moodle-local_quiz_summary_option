@@ -24,7 +24,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-use MoodleQuickForm;
+
+global $CFG;
+require_once($CFG->libdir . '/formslib.php');
 
 class local_quiz_summary_option_lib_testcase extends advanced_testcase {
 
