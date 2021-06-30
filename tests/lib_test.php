@@ -65,7 +65,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $formwrapperstub = new \local_quiz_summary_option\local\tests\test_form();
         $mform = new MoodleQuickForm('test', 'POST', 'test');
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
-        self::assertEquals('SHOW', $mform->_defaultValues['summaryoption']);
+        self::assertEquals(SUMMARY_OPTION_SHOW, $mform->_defaultValues['summaryoption']);
     }
 
     /**
@@ -82,7 +82,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
 
         local_quiz_summary_option_coursemodule_standard_elements($formwrapperstub, $mform);
 
-        self::assertEquals('HIDE', $mform->_defaultValues['summaryoption']);
+        self::assertEquals(SUMMARY_OPTION_HIDE, $mform->_defaultValues['summaryoption']);
     }
 
     /**
