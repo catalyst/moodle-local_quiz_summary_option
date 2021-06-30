@@ -28,36 +28,21 @@ namespace local_quiz_summary_option\local\tests;
 /**
  * Form object to be used in test case
  */
-class test_form extends \moodleform {
+class test_form extends \moodleform_mod {
 
     private $modulename;
-
     private $coursemodule;
 
-    /**
-     * test_form constructor.
-     * @param string $modulename
-     * @param int $coursemodule
-     * @param null $action
-     * @param null $customdata
-     * @param string $method
-     * @param string $target
-     * @param null $attributes
-     * @param bool $editable
-     * @param null $ajaxformdata
-     */
-    public function __construct(string $modulename = 'quiz', int $coursemodule = 12345, $action = null,
-                                $customdata = null, $method = 'post', $target = '', $attributes = null,
-                                $editable = true, $ajaxformdata = null) {
+    public function __construct($modulename = 'quiz', $coursemodule = null) {
+        // Ignore parent's contructor.
         $this->modulename = $modulename;
         $this->coursemodule = $coursemodule;
-        parent::__construct($action, $customdata, $method, $target, $attributes, $editable, $ajaxformdata);
     }
 
     /**
      * Form definition.
      */
-    public function definition() {
+    protected function definition() {
         // No definition required.
     }
     /**
