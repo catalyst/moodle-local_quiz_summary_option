@@ -23,6 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 namespace local_quiz_summary_option\local\tests;
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
