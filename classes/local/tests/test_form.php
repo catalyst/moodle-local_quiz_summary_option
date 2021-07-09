@@ -25,6 +25,8 @@
 
 namespace local_quiz_summary_option\local\tests;
 
+require_once($CFG->dirroot.'/course/moodleform_mod.php');
+
 /**
  * Form object to be used in test case
  */
