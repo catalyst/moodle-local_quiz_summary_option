@@ -166,6 +166,7 @@ class local_quiz_summary_option_lib_testcase extends advanced_testcase {
         $SCRIPT = '/mod/quiz/processattempt.php';
         $_GET['nextpage'] = -1;
         $_GET['cmid'] = 12345;
+        $_POST['next'] = 'Finish attempt...';
 
         $DB->insert_record('local_quiz_summary_option', ['cmid' => $_GET['cmid'], 'show_summary' => 0], false);
 

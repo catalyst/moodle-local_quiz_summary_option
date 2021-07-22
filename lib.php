@@ -104,6 +104,12 @@ function local_quiz_summary_option_after_config() {
         return;
     }
 
+    // $_POST['next'] =  Finish attempt... is only set when you click the button. Setting the default to none to ensure that it's the only button to finish attempt.
+    $next = optional_param('next', null, PARAM_TEXT);
+    if (is_null($next)) {
+        return;
+    }
+
     $cmid = optional_param('cmid', null, PARAM_INT);
     $row = $DB->get_record('local_quiz_summary_option', ['cmid' => $cmid], 'show_summary');
     if (!$row) {
