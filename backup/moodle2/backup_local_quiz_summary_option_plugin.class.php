@@ -34,25 +34,19 @@
 defined('MOODLE_INTERNAL') || die;
 
 
-class backup_local_quiz_summary_option_plugin extends backup_local_plugin {
+class backup_local_quiz_summary_option_plugin extends backup_local_plugin
+{
+    protected function define_module_plugin_structure() {
+        // Create XML child element.
+        $element_name = $this->get_recommended_name();
+        $sqlcmid = backup_helper::is_sqlparam($this->get_setting_value(backup::VAR_MODID));
+        $quiz_summary = new backup_nested_element($element_name, array(), array('show_summary'));
+        $quiz_summary->set_source_table('local_quiz_summary_option', array('cmid' => $sqlcmid));
 
+        // Add child to module XML.
+        $plugin = $this->get_plugin_element();
+        $plugin->add_child($quiz_summary);
 
-   protected function define_module_plugin_structure() {
-       global $DB;
-
-       $cmid = $this->task->get_moduleid();
-       list($course, $cm) = get_course_and_cm_from_cmid($cmid);
-        //print_r($cm->modname);
-
-        if ($cm->modname!= 'quiz') {
-           return;
-        }
-       $row = $DB->get_record('local_quiz_summary_option', ['cmid' => $cmid], 'show_summary');
-       $show = true;
-       if ($row) {
-           $show = $row->show_summary;
-       }
-       print("Save in backup for CMID=$cmid is local_quiz_summary_option=$show\n");
-
-   }
+        return $plugin;
+    }
 }
