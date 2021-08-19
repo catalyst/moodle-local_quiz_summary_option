@@ -23,10 +23,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// This activity has not particular settings but the inherited from the generic
-// backup_activity_task so here there isn't any class definition, like the ones
-// existing in /backup/moodle2/backup_settingslib.php (activities section)
-
 /**
  * Define all the backup steps that will be used by the backup_local_quiz_summary_option_plugin
  */
@@ -38,14 +34,14 @@ class backup_local_quiz_summary_option_plugin extends backup_local_plugin
 {
     protected function define_module_plugin_structure() {
         // Create XML child element.
-        $element_name = $this->get_recommended_name();
+        $elementname = $this->get_recommended_name();
         $sqlcmid = backup_helper::is_sqlparam($this->get_setting_value(backup::VAR_MODID));
-        $quiz_summary = new backup_nested_element($element_name, array(), array('show_summary'));
-        $quiz_summary->set_source_table('local_quiz_summary_option', array('cmid' => $sqlcmid));
+        $quizsummary = new backup_nested_element($elementname, array(), array('show_summary'));
+        $quizsummary->set_source_table('local_quiz_summary_option', array('cmid' => $sqlcmid));
 
         // Add child to module XML.
         $plugin = $this->get_plugin_element();
-        $plugin->add_child($quiz_summary);
+        $plugin->add_child($quizsummary);
 
         return $plugin;
     }

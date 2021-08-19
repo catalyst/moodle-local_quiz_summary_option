@@ -104,7 +104,8 @@ function local_quiz_summary_option_after_config() {
         return;
     }
 
-    // $_POST['next'] =  Finish attempt... is only set when you click the button. Setting the default to none to ensure that it's the only button to finish attempt.
+    // The $_POST['next'] =  Finish attempt... is only set when you click the button.
+    // Setting the default to none to ensure that it's the only button to finish attempt.
     $thispage = optional_param('thispage', 0, PARAM_INT);
     $next = optional_param('next', null, PARAM_TEXT);
     if (is_null($next) && ($thispage != -1)) {

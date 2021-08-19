@@ -1,4 +1,3 @@
-
 <?php
 // This file is part of Moodle - http://moodle.org/
 //
@@ -24,10 +23,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// This activity has not particular settings but the inherited from the generic
-// backup_activity_task so here there isn't any class definition, like the ones
-// existing in /backup/moodle2/backup_settingslib.php (activities section)
-
 /**
  * Define all the restore steps that will be used by the backup_local_quiz_summary_option_plugin
  */
@@ -38,7 +33,7 @@ class restore_local_quiz_summary_option_plugin extends restore_local_plugin {
     protected function define_module_plugin_structure() {
         $paths = array();
 
-        // This will call a function that starts with process_{name}. In this case it's calling process_quiz_summary function
+        // This will call a function that starts with process_{name}. In this case it's calling process_quiz_summary function.
         $paths[] = new restore_path_element('quiz_summary', $this->get_pathfor(''));
         return $paths;
     }
