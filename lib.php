@@ -76,7 +76,7 @@ function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $
     }
     $show = 1;
     $cmid = $moduleinfo->coursemodule;
-    if ($moduleinfo->summaryoption == SUMMARY_OPTION_HIDE) {
+    if (isset($moduleinfo->summaryoption) && $moduleinfo->summaryoption == SUMMARY_OPTION_HIDE) {
         $show = 0;
     }
     global $DB;
