@@ -15,22 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Language strings
+ * Privacy Subsystem implementation.
  *
- * @package    local_quiz_summary_option
- * @author     Christina Roperto (christinatheeroperto@catalyst-au.net)
+ * @package local_quiz_summary_option
  * @copyright  Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Quiz Summary Option';
-$string['privacy:metadata'] = 'The local quiz summary option plugin does not store any personal data.';
-$string['configsummaryoption'] = 'on show summary page will be appear once the quiz is submitted, otherwise summary page is hidden';
-$string['summarypageoption'] = 'Summary page option';
-$string['summaryoption'] = 'Summary page';
-$string['summaryoption_show'] = 'Show';
-$string['summaryoption_help'] = 'enable the ability to show/hide summary page after completing quiz';
-$string['summaryoption_hide'] = 'Hide';
+namespace local_quiz_summary_option\privacy;
 
-// Privacy.
-$string['privacy:metadata'] = 'This plugin does not store personal data.';
+defined('MOODLE_INTERNAL') || die();
+
+class provider implements \core_privacy\local\metadata\null_provider {
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}
