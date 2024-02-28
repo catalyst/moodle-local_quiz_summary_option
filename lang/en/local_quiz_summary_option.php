@@ -31,6 +31,3 @@ $string['summaryoption'] = 'Summary page';
 $string['summaryoption_show'] = 'Show';
 $string['summaryoption_help'] = 'enable the ability to show/hide summary page after completing quiz';
 $string['summaryoption_hide'] = 'Hide';
-
-// Privacy.
-$string['privacy:metadata'] = 'This plugin does not store personal data.';
