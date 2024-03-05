@@ -23,8 +23,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Implements callbacks coursemodule_standard_elements to add an option to show/hide quiz summary page.
  *
@@ -72,7 +70,7 @@ function local_quiz_summary_option_coursemodule_standard_elements(\moodleform_mo
  */
 function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $course) {
     if ($moduleinfo->modulename != 'quiz') {
-        return;
+        return $moduleinfo;
     }
     $show = 1;
     $cmid = $moduleinfo->coursemodule;
@@ -88,6 +86,7 @@ function local_quiz_summary_option_coursemodule_edit_post_actions($moduleinfo, $
     } else {
         $DB->insert_record('local_quiz_summary_option', ['cmid' => $cmid, 'show_summary' => $show], false);
     }
+    return $moduleinfo;
 }
 /**
  * Checks if show summary is disabled (hidden) then skips summary page.
